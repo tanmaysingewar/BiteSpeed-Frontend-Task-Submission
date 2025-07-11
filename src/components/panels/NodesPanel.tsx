@@ -30,7 +30,7 @@ const nodeTypes: NodeType[] = [
   {
     id: "send_email",
     type: "emailNode1",
-    label: "Email Node One",
+    label: "Email One",
     icon: Mail,
     description: "Send an email",
   },
@@ -44,7 +44,7 @@ const NodesPanel = () => {
   };
 
   return (
-    <div className="w-1/4 bg-white border-r border-gray-200 p-4 dark:bg-neutral-900 dark:border-gray-700">
+    <div className="w-1/4 bg-neutral-50 border-l border-gray-200 p-4 dark:bg-neutral-900 dark:border-gray-700">
       <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
         Nodes
       </h3>
@@ -61,7 +61,7 @@ const NodesPanel = () => {
               key={nodeType.id}
               draggable
               onDragStart={(event) => onDragStart(event, nodeType.type)}
-              className="flex items-center gap-3 p-3 bg-blue-50 border border-blue-200 rounded-lg cursor-grab hover:bg-blue-100 transition-colors duration-200 dark:bg-neutral-800 dark:border-neutral-700 dark:hover:bg-neutral-700"
+              className="flex items-center gap-3 p-3 bg-amber-50 border border-amber-200 rounded-lg cursor-grab hover:bg-blue-100 transition-colors duration-200 dark:bg-neutral-800 dark:border-neutral-700 dark:hover:bg-neutral-700"
             >
               <IconComponent size={20} className="text-amber-600" />
               <div>

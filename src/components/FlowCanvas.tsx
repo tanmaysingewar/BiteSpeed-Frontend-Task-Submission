@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   ReactFlow,
   Node,
@@ -40,7 +40,7 @@ const nodeTypes = {
   emailNode1: EmailNodeOne,
 };
 
-// Initial nodes and edges
+// Initial nodes and edges - start empty to avoid hydration issues
 const initialNodes: Node[] = [];
 const initialEdges: Edge[] = [];
 
@@ -48,6 +48,36 @@ const FlowCanvas: React.FC = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  // Load initial data from localStorage after component mounts
+  useEffect(() => {
+    if (typeof window !== "undefined" && !isLoaded) {
+      try {
+        const savedNodes = localStorage.getItem("flow-nodes");
+        const savedEdges = localStorage.getItem("flow-edges");
+
+        if (savedNodes) {
+          const parsedNodes = JSON.parse(savedNodes);
+          if (parsedNodes.length > 0) {
+            setNodes(parsedNodes);
+          }
+        }
+
+        if (savedEdges) {
+          const parsedEdges = JSON.parse(savedEdges);
+          if (parsedEdges.length > 0) {
+            setEdges(parsedEdges);
+          }
+        }
+
+        setIsLoaded(true);
+      } catch (error) {
+        console.error("Error loading from localStorage:", error);
+        setIsLoaded(true);
+      }
+    }
+  }, [setNodes, setEdges, isLoaded]);
 
   // Handle new connections between nodes
   const onConnect = useCallback(
@@ -166,8 +196,20 @@ const FlowCanvas: React.FC = () => {
       }
     }
 
+    // Save nodes to localStorage
+    localStorage.setItem("flow-nodes", JSON.stringify(nodes));
+    localStorage.setItem("flow-edges", JSON.stringify(edges));
+
     // If validation passes, save the flow
-    toast.info("Flow saved successfully!");
+    toast.info("Flow saved to local storage successfully!", {
+      duration: 5000,
+      style: {
+        backgroundColor: "#22C55E",
+        color: "white",
+        borderRadius: "10px",
+        border: "1px solid #22C55E",
+      },
+    });
   }, [nodes, edges]);
 
   // Deselect node
@@ -183,7 +225,7 @@ const FlowCanvas: React.FC = () => {
         <div className="absolute top-4 right-4 z-10 flex items-center gap-4">
           <button
             onClick={onSave}
-            className="bg-white hover:bg-neutral-300 text-black px-4 py-2 rounded-md transition-colors cursor-pointer"
+            className="bg-neutral-800 hover:bg-neutral-900 text-white px-4 py-2 rounded-md transition-colors cursor-pointer"
           >
             Save Changes
           </button>

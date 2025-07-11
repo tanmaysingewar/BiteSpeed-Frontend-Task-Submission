@@ -30,7 +30,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
   };
 
   return (
-    <div className="w-1/4 bg-white border-r border-gray-200 p-4 dark:bg-neutral-900 dark:border-gray-700">
+    <div className="w-1/4 bg-neutral-50 border-l border-gray-200 p-4 dark:bg-neutral-900 dark:border-gray-700">
       {/* Header with back button */}
       <div className="flex items-center gap-2 mb-4">
         <button
