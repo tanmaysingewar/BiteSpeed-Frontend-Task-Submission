@@ -1,8 +1,6 @@
-# BiteSpeed Chatbot Flow Builder
+# BiteSpeed: Frontend Task Submission
 
 A modern, extensible chatbot flow builder built with React Flow, Next.js, and TypeScript. This application allows users to create conversational flows by connecting message nodes through a drag-and-drop interface.
-
-![Chatbot Flow Builder](https://via.placeholder.com/800x400/f0f9ff/1e40af?text=Chatbot+Flow+Builder)
 
 ## 🚀 Features
 

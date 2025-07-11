@@ -42,6 +42,7 @@ const EmailNodeOne = ({
       <Handle
         type="source"
         position={Position.Right}
+        id="source"
         className="w-3 h-3 bg-gray-400 border-2 border-white"
         style={{ right: -6 }}
       />
@@ -50,6 +51,7 @@ const EmailNodeOne = ({
       <Handle
         type="target"
         position={Position.Left}
+        id="target"
         className="w-3 h-3 bg-gray-400 border-2 border-white"
         style={{ left: -6 }}
       />

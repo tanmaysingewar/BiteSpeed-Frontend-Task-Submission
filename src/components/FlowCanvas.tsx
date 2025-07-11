@@ -48,14 +48,25 @@ const FlowCanvas: React.FC = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [selectedNode, setSelectedNode] = useState<Node | null>(null);
-  const [saveError, setSaveError] = useState<string>("");
 
   // Handle new connections between nodes
   const onConnect = useCallback(
     (params: Connection) => {
+      // Check if source handle already has an edge
+      const existingEdgeFromSource = edges.find(
+        (edge) =>
+          edge.source === params.source &&
+          edge.sourceHandle === params.sourceHandle
+      );
+
+      if (existingEdgeFromSource) {
+        toast.error("Only one edge can originate from a source handle");
+        return;
+      }
+
       setEdges((eds) => addEdge(params, eds));
     },
-    [setEdges]
+    [setEdges, edges]
   );
 
   // Handle node selection
@@ -132,8 +143,6 @@ const FlowCanvas: React.FC = () => {
 
   // Validate and save flow
   const onSave = useCallback(() => {
-    setSaveError("");
-
     if (nodes.length > 1) {
       // Check if more than one node has empty target handles
       const nodesWithoutIncomingEdges = nodes.filter((node) => {
@@ -141,7 +150,18 @@ const FlowCanvas: React.FC = () => {
       });
 
       if (nodesWithoutIncomingEdges.length > 1) {
-        setSaveError("Cannot save Flow");
+        toast.error(
+          "Cannot save Flow, there more than one node without incoming edges",
+          {
+            duration: 5000,
+            style: {
+              backgroundColor: "#FF2C2C",
+              color: "white",
+              borderRadius: "10px",
+              border: "1px solid #FF2C2C",
+            },
+          }
+        );
         return;
       }
     }
@@ -161,11 +181,6 @@ const FlowCanvas: React.FC = () => {
       <div className="flex-1 relative">
         {/* Header with Save Button */}
         <div className="absolute top-4 right-4 z-10 flex items-center gap-4">
-          {saveError && (
-            <div className="bg-red-100 text-red-700 px-3 py-2 rounded-md text-sm">
-              {saveError}
-            </div>
-          )}
           <button
             onClick={onSave}
             className="bg-white hover:bg-neutral-300 text-black px-4 py-2 rounded-md transition-colors cursor-pointer"
