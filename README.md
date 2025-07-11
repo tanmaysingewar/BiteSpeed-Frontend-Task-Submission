@@ -59,16 +59,19 @@ A modern, extensible chatbot flow builder built with React Flow, Next.js, and Ty
 ```
 src/
 ├── app/
-│   ├── globals.css          # Global styles
-│   ├── layout.tsx           # Root layout component
-│   └── page.tsx             # Main page component
-├── components/
-│   ├── FlowCanvas.tsx       # Main flow builder component
+│   ├── favicon.ico      # App favicon
+│   ├── globals.css      # Global styles
+│   ├── layout.tsx       # Root layout component
+│   └── page.tsx         # Main page component
+└── components/
+│   ├── FlowCanvas.tsx   # Main flow builder component
 │   ├── nodes/
-│   │   └── TextNode.tsx     # Custom text message node
+│   │   ├── EmailNodeOne.tsx    # Email message node
+│   │   ├── TextNodeOne.tsx     # Primary text message node
+│   │   └── TextNodeTwo.tsx     # Secondary text message node
 │   └── panels/
-│       ├── NodesPanel.tsx   # Draggable nodes panel
-│       └── SettingsPanel.tsx # Node settings editor
+│       ├── NodesPanel.tsx      # Draggable nodes panel
+│       └── SettingsPanel.tsx   # Node settings editor
 ```
 
 ## 🎮 How to Use
